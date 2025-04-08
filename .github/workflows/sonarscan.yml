@@ -1,0 +1,38 @@
+name: sonar_cloud_scanner_github_actions
+on:
+        workflow_dispatch:
+
+
+jobs:
+    TestSonarCloudScan:
+        runs-on: ubuntu-latest
+    
+        steps:
+            -   name: Checkout repo
+                uses: actions/checkout@v2
+                with:
+                    fetch-depth: 0
+            
+            -   name: Sonar Cloud Scan 
+                uses: sonarsource/sonarcloud-github-action@master
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                with:
+                    args: >
+                        -Dsonar.organization=SarojGhimire 
+                        -Dsonar.projectKey=sarojghimire 
+                        -Dsonar.sources=.
+                        -Dsonar.inclusions=**/*.tf
+                        -Dsonar.host.url=https://sonarcloud.io                       
+                        
+            
+            -   name: Terraform security checks
+                uses: aquasecurity/tfsec-action@v1.0.0
+                with:
+                    args: '--soft-fail --format sarif --out results.sarif'
+
+            -   name: tfsec result uploaded to github sec tab
+                uses: github/codeql-action/upload-sarif@v2
+                with:
+                    sarif_file: scan-results.sarif
