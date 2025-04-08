@@ -16,11 +16,11 @@ jobs:
             -   name: Sonar Cloud Scan 
                 uses: sonarsource/sonarcloud-github-action@master
                 env:
-                    HUB_TOKEN: ${{ secrets.HUB_TOKEN }}
+                    GITHUB_TOKEN: ${{ secrets.HUB_TOKEN }}
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 with:
                     args: >
-                        -Dsonar.organization=SarojGhimire 
+                        -Dsonar.organization=sarojghimire 
                         -Dsonar.projectKey=sarojghimire 
                         -Dsonar.sources=.
                         -Dsonar.inclusions=**/*.tf
