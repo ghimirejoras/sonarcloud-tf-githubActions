@@ -22,8 +22,9 @@ jobs:
                     args: >
                         -Dsonar.organization=sarojghimire 
                         -Dsonar.projectKey=sarojghimire 
-                        -Dsonar.sources=.
-                        -Dsonar.inclusions=**/*.tf
+                        -Dsonar.sources=terraform
+                        -Dsonar.inclusions=terraform/**/*.tf
+                        -Dsonar.exckusions=terraform/.terraform
                         -Dsonar.host.url=https://sonarcloud.io                       
                         
             
